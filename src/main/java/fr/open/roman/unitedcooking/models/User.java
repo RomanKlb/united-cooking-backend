@@ -1,14 +1,19 @@
 package fr.open.roman.unitedcooking.models;
 
 import java.time.LocalDateTime;
+import java.util.HashSet;
+import java.util.Set;
 
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.Inheritance;
 import javax.persistence.InheritanceType;
+import javax.persistence.JoinColumn;
+import javax.persistence.JoinTable;
+import javax.persistence.ManyToMany;
 import javax.persistence.MappedSuperclass;
-import javax.persistence.OneToOne;
 import javax.validation.constraints.Email;
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.NotNull;
@@ -52,10 +57,11 @@ public abstract class User {
 	@Email(message = "Il faut un email valide")
 	private String email;
 	
-	@NotNull(message = "Le role ne peut pas être vide")
-	@NotBlank(message = "Le role doit être complété")
-	@OneToOne
-	private Role role;
+	@ManyToMany(fetch = FetchType.LAZY)
+	@JoinTable(	name = "rolesOfUsers", 
+				joinColumns = @JoinColumn(name = "user_id"), 
+				inverseJoinColumns = @JoinColumn(name = "role_id"))
+	private Set<Role> roles = new HashSet<>();
 	
 	private LocalDateTime createdUser;
 
@@ -66,13 +72,11 @@ public abstract class User {
 	public User(
 			@NotNull(message = "Le pseudo ne peut pas être vide") @NotBlank(message = "Le pseudo doit être complété") @Pattern(regexp = "^([A-Za-z0-9]+)*", message = "votre pseudo doit être composé uniquement de majuscule, minuscule et/ou chiffre") String pseudo,
 			@NotNull(message = "Le mot de passe ne peut pas être vide") @NotBlank(message = "Le mot de passe doit être complété") @Length(min = 6, message = "Mettre un mot de passe de minimum 6 caractères") String password,
-			@NotNull(message = "L'email ne peut pas être vide") @NotBlank(message = "Merci de préciser une adresse email") @Email(message = "Il faut un email valide") String email,
-			@NotNull(message = "Le role ne peut pas être vide") @NotBlank(message = "Le role doit être complété") Role role) {
+			@NotNull(message = "L'email ne peut pas être vide") @NotBlank(message = "Merci de préciser une adresse email") @Email(message = "Il faut un email valide") String email) {
 		this();
 		this.pseudo = pseudo;
 		this.password = password;
 		this.email = email;
-		this.role = role;
 	}
 
 	

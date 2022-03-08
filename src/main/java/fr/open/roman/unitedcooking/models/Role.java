@@ -4,7 +4,6 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
-import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.NotNull;
 
 import fr.open.roman.unitedcooking.models.enums.ERole;
@@ -26,10 +25,9 @@ public class Role {
 
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
-	private Long id;
+	private Integer id;
 	
 	@NotNull(message = "Le role ne peut pas être vide")
-	@NotBlank(message = "Le role doit être complété")
 	private ERole name;
 
 	public Role(ERole name) {
