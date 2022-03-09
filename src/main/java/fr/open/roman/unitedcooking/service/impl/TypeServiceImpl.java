@@ -3,6 +3,8 @@ package fr.open.roman.unitedcooking.service.impl;
 import java.util.List;
 import java.util.Optional;
 
+import javax.validation.Valid;
+
 import org.springframework.stereotype.Service;
 
 import fr.open.roman.unitedcooking.models.Type;
@@ -21,7 +23,7 @@ public class TypeServiceImpl implements TypeService{
 	
 
 	@Override
-	public void createType(String name) {
+	public void createType(@Valid String name) {
 		typeRepository.save(new Type(name));
 	}
 

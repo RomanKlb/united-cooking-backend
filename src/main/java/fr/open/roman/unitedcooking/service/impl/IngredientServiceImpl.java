@@ -3,6 +3,8 @@ package fr.open.roman.unitedcooking.service.impl;
 import java.util.List;
 import java.util.Optional;
 
+import javax.validation.Valid;
+
 import org.springframework.stereotype.Service;
 
 import fr.open.roman.unitedcooking.models.Ingredient;
@@ -21,7 +23,7 @@ public class IngredientServiceImpl implements IngredientService{
 
 	
 	@Override
-	public void createIngredient(String name) {
+	public void createIngredient(@Valid String name) {
 		ingredientRepository.save(new Ingredient(name));
 	}
 

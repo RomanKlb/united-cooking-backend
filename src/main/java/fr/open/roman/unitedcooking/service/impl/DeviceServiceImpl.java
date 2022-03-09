@@ -3,6 +3,8 @@ package fr.open.roman.unitedcooking.service.impl;
 import java.util.List;
 import java.util.Optional;
 
+import javax.validation.Valid;
+
 import org.springframework.stereotype.Service;
 
 import fr.open.roman.unitedcooking.models.Device;
@@ -21,7 +23,7 @@ public class DeviceServiceImpl implements DeviceService{
 
 	
 	@Override
-	public void createDevice(String name) {
+	public void createDevice(@Valid String name) {
 		deviceRepository.save(new Device(name));
 	}
 

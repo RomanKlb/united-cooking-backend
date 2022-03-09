@@ -3,6 +3,8 @@ package fr.open.roman.unitedcooking.service.impl;
 import java.util.List;
 import java.util.Optional;
 
+import javax.validation.Valid;
+
 import org.springframework.stereotype.Service;
 
 import fr.open.roman.unitedcooking.models.Role;
@@ -22,7 +24,7 @@ public class RoleServiceImpl implements RoleService{
 
 	
 	@Override
-	public void createRole(ERole name) {
+	public void createRole(@Valid ERole name) {
 		roleRepository.save(new Role(name));
 	}
 	

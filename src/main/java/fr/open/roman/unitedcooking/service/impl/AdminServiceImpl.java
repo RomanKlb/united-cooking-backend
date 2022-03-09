@@ -44,6 +44,9 @@ public class AdminServiceImpl implements AdminService {
 			Role adminRole = roleService.recoveryRoleName(ERole.ROLE_ADMIN)
 					.orElseThrow(() -> new RuntimeException("Error: Role is not found."));
 			roles.add(adminRole);
+			Role memberRole = roleService.recoveryRoleName(ERole.ROLE_MEMBER)
+					.orElseThrow(() -> new RuntimeException("Error: Role is not found."));
+			roles.add(memberRole);
 		admin.setRoles(roles);
 		adminRepository.save(admin);
 	}

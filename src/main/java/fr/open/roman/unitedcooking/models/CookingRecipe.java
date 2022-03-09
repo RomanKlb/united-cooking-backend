@@ -106,7 +106,7 @@ public class CookingRecipe {
 			List<Device> devices,
 			@NotNull(message = "La catégorie ne peut pas être vide") @NotBlank(message = "La catégorie doit être complété") Category category,
 			Type type, @NotNull(message = "Le membre doit être présent") Member member) {
-		super();
+		this();
 		this.name = name;
 		this.preparationTime = preparationTime;
 		this.cookingTime = cookingTime;
