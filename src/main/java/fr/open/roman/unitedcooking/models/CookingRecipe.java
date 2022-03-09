@@ -1,5 +1,6 @@
 package fr.open.roman.unitedcooking.models;
 
+import java.time.LocalDateTime;
 import java.time.LocalTime;
 import java.util.List;
 
@@ -22,7 +23,6 @@ import com.fasterxml.jackson.annotation.JsonIgnore;
 
 import lombok.EqualsAndHashCode;
 import lombok.Getter;
-import lombok.NoArgsConstructor;
 import lombok.Setter;
 import lombok.ToString;
 
@@ -31,7 +31,6 @@ import lombok.ToString;
 @Setter
 @ToString
 @EqualsAndHashCode
-@NoArgsConstructor
 public class CookingRecipe {
 
 	@Id
@@ -54,6 +53,10 @@ public class CookingRecipe {
 	@NotBlank(message = "La description doit être complété")
 	@Length(max = 10000, message = "La description doit être de maximum 10 000 caractères")
 	private String description;
+	
+	private LocalDateTime createdCookingRecipe;
+	
+	private LocalDateTime moderateCookingRecipe;
 	
 	@OneToOne(cascade = CascadeType.REMOVE)
 	private Image image;
@@ -82,17 +85,27 @@ public class CookingRecipe {
 	
 	@ManyToOne
 	private Type type;
-
 	
+	@NotNull(message = "Le membre doit être présent")
+	@OneToOne
+	private Member member;
+	
+	@OneToOne
+	private Admin admin;
+
+	public CookingRecipe() {
+		createdCookingRecipe = LocalDateTime.now();
+	}
+
 	public CookingRecipe(
 			@NotNull(message = "Le nom de la recette ne peut pas être vide") @NotBlank(message = "Le nom de la recette doit être complété") String name,
 			@NotNull(message = "Le temps de préparation ne peut pas être vide") @NotBlank(message = "Le temps de préparation doit être complété") LocalTime preparationTime,
 			@NotNull(message = "Le temps de cuisson ne peut pas être vide") @NotBlank(message = "Le temps de cuisson doit être complété") LocalTime cookingTime,
-			@NotNull(message = "La description ne peut pas être vide") @NotBlank(message = "La description doit être complété") String description,
+			@NotNull(message = "La description ne peut pas être vide") @NotBlank(message = "La description doit être complété") @Length(max = 10000, message = "La description doit être de maximum 10 000 caractères") String description,
 			@NotNull(message = "Les ingrédients ne peuvent pas être vide") @NotBlank(message = "Les ingrédients doivent être complété") List<Ingredient> ingredients,
 			List<Device> devices,
 			@NotNull(message = "La catégorie ne peut pas être vide") @NotBlank(message = "La catégorie doit être complété") Category category,
-			Type type) {
+			Type type, @NotNull(message = "Le membre doit être présent") Member member) {
 		super();
 		this.name = name;
 		this.preparationTime = preparationTime;
@@ -102,7 +115,10 @@ public class CookingRecipe {
 		this.devices = devices;
 		this.category = category;
 		this.type = type;
+		this.member = member;
 	}
-
 	
+	
+
+
 }

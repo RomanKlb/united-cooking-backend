@@ -13,7 +13,6 @@ import javax.validation.constraints.NotNull;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 
-import fr.open.roman.unitedcooking.models.enums.EType;
 import lombok.EqualsAndHashCode;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -33,15 +32,15 @@ public class Type {
 	private Long id;
 	
 	@NotNull(message = "Le nom du type ne peut pas être vide")
-	@NotBlank(message = "Le nom du type doit être complété")
-	private EType name;
+	@NotBlank(message = "Le nom du type doit être rentré")
+	private String name;
 	
 	@JsonIgnore
 	@ToString.Exclude
 	@OneToMany(mappedBy = "type", fetch = FetchType.LAZY)
 	private List<CookingRecipe> cookingRecipes;
 
-	public Type(EType name) {
+	public Type(@NotNull(message = "Le nom du type ne peut pas être vide") @NotBlank(message = "Le nom du type doit être rentré") String name) {
 		super();
 		this.name = name;
 	}

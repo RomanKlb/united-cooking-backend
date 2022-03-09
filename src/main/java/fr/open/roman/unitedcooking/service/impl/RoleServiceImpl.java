@@ -22,7 +22,7 @@ public class RoleServiceImpl implements RoleService{
 
 	
 	@Override
-	public void createRoleName(ERole name) {
+	public void createRole(ERole name) {
 		roleRepository.save(new Role(name));
 	}
 	

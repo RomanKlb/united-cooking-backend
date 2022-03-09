@@ -13,7 +13,6 @@ import javax.validation.constraints.NotNull;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 
-import fr.open.roman.unitedcooking.models.enums.ECategory;
 import lombok.EqualsAndHashCode;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -33,8 +32,8 @@ public class Category {
 	private Long id;
 	
 	@NotNull(message = "Le nom de la catégorie ne peut pas être vide")
-	@NotBlank(message = "Le nom de la catégorie doit être complété")
-	private ECategory name;
+	@NotBlank(message = "Le nom de la catégorie doit être remplis")
+	private String name;
 	
 	@JsonIgnore
 	@ToString.Exclude
@@ -43,7 +42,7 @@ public class Category {
 
 	
 	public Category(
-			@NotNull(message = "Le nom de la catégorie ne peut pas être vide") @NotBlank(message = "Le nom de la catégorie doit être complété") ECategory name) {
+			@NotNull(message = "Le nom de la catégorie ne peut pas être vide") @NotBlank(message = "Le nom de la catégorie doit être remplis") String name) {
 		super();
 		this.name = name;
 	}

@@ -48,6 +48,12 @@ public class Member extends User {
 	@OneToMany(targetEntity=CookingRecipe.class, fetch = FetchType.LAZY)
 	@JoinTable(name = "favoritesOfCookingRecipes")
 	private List<CookingRecipe> favoritesOfCookingRecipes;
+	
+	@JsonIgnore
+	@ToString.Exclude
+	@OneToMany(targetEntity=CookingRecipe.class, fetch = FetchType.LAZY)
+	@JoinTable(name = "createdOfCookingRecipes")
+	private List<CookingRecipe> createdCookingRecipes;
 
 	public Member(
 			@NotNull(message = "Le pseudo ne peut pas être vide") @NotBlank(message = "Le pseudo doit être complété") @Pattern(regexp = "^([A-Za-z0-9]+)*", message = "votre pseudo doit être composé uniquement de majuscule, minuscule et/ou chiffre") String pseudo,
