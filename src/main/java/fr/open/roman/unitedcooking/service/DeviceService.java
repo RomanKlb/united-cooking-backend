@@ -10,7 +10,7 @@ import fr.open.roman.unitedcooking.models.Device;
 
 public interface DeviceService {
 
-	void createDevice(@Valid String name);
+	Device createDevice(@Valid String name);
 	
 	Optional<Device> recoveryCategoryByName(String name);
 	Optional<Device> recoveryCategoryById(Long id);

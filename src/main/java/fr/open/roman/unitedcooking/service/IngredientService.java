@@ -10,7 +10,7 @@ import fr.open.roman.unitedcooking.models.Ingredient;
 
 public interface IngredientService {
 
-	void createIngredient(@Valid String name);
+	Ingredient createIngredient(@Valid String name);
 
 	Optional<Ingredient> recoveryIngredientByName(String name);
 	Optional<Ingredient> recoveryIngredientById(Long id);

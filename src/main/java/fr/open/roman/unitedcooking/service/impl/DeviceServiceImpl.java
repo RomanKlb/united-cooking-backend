@@ -23,8 +23,8 @@ public class DeviceServiceImpl implements DeviceService{
 
 	
 	@Override
-	public void createDevice(@Valid String name) {
-		deviceRepository.save(new Device(name));
+	public Device createDevice(@Valid String name) {
+		return deviceRepository.save(new Device(name));
 	}
 
 	@Override

@@ -24,31 +24,31 @@ public class AdminServiceImpl implements AdminService {
 
 	@Autowired
 	PasswordEncoder encoder;
-	
+
 	private final AdminRepository adminRepository;
 	private final RoleService roleService;
-	
+
 	public AdminServiceImpl(AdminRepository adminRepository, RoleService roleService) {
 		super();
 		this.adminRepository = adminRepository;
 		this.roleService = roleService;
 	}
 
-	
+
 	@Override
-	public void createAdmin(@Valid SignupAdminRequest signupAdminRequest) {
+	public Admin createAdmin(@Valid SignupAdminRequest signupAdminRequest) {
 		Admin admin = new Admin(signupAdminRequest.getPseudo(), encoder.encode(signupAdminRequest.getPassword()), signupAdminRequest.getEmail(),
 				signupAdminRequest.getPhoneNumber());
-		
+
 		Set<Role> roles = new HashSet<>();
-			Role adminRole = roleService.recoveryRoleName(ERole.ROLE_ADMIN)
-					.orElseThrow(() -> new RuntimeException("Error: Role is not found."));
-			roles.add(adminRole);
-			Role memberRole = roleService.recoveryRoleName(ERole.ROLE_MEMBER)
-					.orElseThrow(() -> new RuntimeException("Error: Role is not found."));
-			roles.add(memberRole);
+		Role adminRole = roleService.recoveryRoleName(ERole.ROLE_ADMIN)
+				.orElseThrow(() -> new RuntimeException("Error: Role is not found."));
+		roles.add(adminRole);
+		Role memberRole = roleService.recoveryRoleName(ERole.ROLE_MEMBER)
+				.orElseThrow(() -> new RuntimeException("Error: Role is not found."));
+		roles.add(memberRole);
 		admin.setRoles(roles);
-		adminRepository.save(admin);
+		return adminRepository.save(admin);
 	}
 
 	@Override

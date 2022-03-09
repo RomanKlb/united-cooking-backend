@@ -10,7 +10,7 @@ import fr.open.roman.unitedcooking.payload.request.SignupAdminRequest;
 
 public interface AdminService {
 
-	void createAdmin(@Valid SignupAdminRequest signupAdminRequest);
+	Admin createAdmin(@Valid SignupAdminRequest signupAdminRequest);
 	
 	Optional<Admin> recoveryAdminByPseudo(String pseudo);
 	

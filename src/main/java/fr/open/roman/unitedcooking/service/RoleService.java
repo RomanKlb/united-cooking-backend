@@ -10,7 +10,7 @@ import fr.open.roman.unitedcooking.models.enums.ERole;
 
 public interface RoleService {
 
-	void createRole(@Valid ERole name);
+	Role createRole(@Valid ERole name);
 
 	Optional<Role> recoveryRoleName(ERole name);
 	

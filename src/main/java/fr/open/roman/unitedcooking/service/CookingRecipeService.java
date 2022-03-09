@@ -14,7 +14,7 @@ import fr.open.roman.unitedcooking.models.exception.NotFoundTypeException;
 
 public interface CookingRecipeService {
 
-	void createcookingRecipe(@Valid CookingRecipeReceipt cookingRecipeReceipt) 
+	CookingRecipe createcookingRecipe(@Valid CookingRecipeReceipt cookingRecipeReceipt) 
 			throws NotFoundCategoryException, NotFoundTypeException, NotFoundMemberException;
 	
 	Optional<CookingRecipe> recoveryCookingRecipeById(Long id);

@@ -24,28 +24,28 @@ import fr.open.roman.unitedcooking.service.RoleService;
 public class MemberServiceImpl implements MemberService{
 	@Autowired
 	PasswordEncoder encoder;
-	
+
 	private final RoleService roleService;
 	private final MemberRepository memberRepository;
-	
+
 	public MemberServiceImpl(MemberRepository memberRepository, RoleService roleService) {
 		super();
 		this.roleService = roleService;
 		this.memberRepository = memberRepository;
 	}
 
-	
+
 	@Override
-	public void createMember(@Valid SignupMemberRequest signupMemberRequest) {
+	public Member createMember(@Valid SignupMemberRequest signupMemberRequest) {
 		Member member = new Member(signupMemberRequest.getPseudo(), encoder.encode(signupMemberRequest.getPassword()), signupMemberRequest.getEmail(),
 				signupMemberRequest.getName(), signupMemberRequest.getSurname());
-		
+
 		Set<Role> roles = new HashSet<>();
-			Role memberRole = roleService.recoveryRoleName(ERole.ROLE_MEMBER)
-					.orElseThrow(() -> new RuntimeException("Error: Role is not found."));
-			roles.add(memberRole);
+		Role memberRole = roleService.recoveryRoleName(ERole.ROLE_MEMBER)
+				.orElseThrow(() -> new RuntimeException("Error: Role is not found."));
+		roles.add(memberRole);
 		member.setRoles(roles);
-		memberRepository.save(member);
+		return memberRepository.save(member);
 	}
 
 	@Override

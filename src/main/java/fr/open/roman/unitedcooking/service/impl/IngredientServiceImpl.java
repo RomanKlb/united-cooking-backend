@@ -23,8 +23,8 @@ public class IngredientServiceImpl implements IngredientService{
 
 	
 	@Override
-	public void createIngredient(@Valid String name) {
-		ingredientRepository.save(new Ingredient(name));
+	public Ingredient createIngredient(@Valid String name) {
+		return ingredientRepository.save(new Ingredient(name));
 	}
 
 	@Override

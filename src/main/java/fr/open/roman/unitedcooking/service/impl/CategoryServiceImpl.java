@@ -23,8 +23,8 @@ public class CategoryServiceImpl implements CategoryService {
 
 	
 	@Override
-	public void createCategory(@Valid String name) {
-		categoryRepository.save(new Category(name));
+	public Category createCategory(@Valid String name) {
+		return categoryRepository.save(new Category(name));
 	}
 
 	@Override

@@ -46,9 +46,9 @@ public class CookingRecipeServiceImpl implements CookingRecipeService{
 
 
 	@Override
-	public void createcookingRecipe(@Valid CookingRecipeReceipt dto) 
+	public CookingRecipe createcookingRecipe(@Valid CookingRecipeReceipt dto) 
 			throws NotFoundCategoryException, NotFoundTypeException, NotFoundMemberException {
-		cookingRecipeRepository.save(new CookingRecipe(
+		return cookingRecipeRepository.save(new CookingRecipe(
 				dto.getName(), 
 				dto.getPreparationTime(), 
 				dto.getCookingTime(), 

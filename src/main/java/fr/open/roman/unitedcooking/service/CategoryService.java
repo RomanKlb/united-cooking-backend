@@ -9,7 +9,7 @@ import fr.open.roman.unitedcooking.models.Category;
 
 public interface CategoryService {
 
-	void createCategory(@Valid String name);
+	Category createCategory(@Valid String name);
 	
 	Optional<Category> recoveryCategoryByName(String name);
 	Optional<Category> recoveryCategoryById(Long id);

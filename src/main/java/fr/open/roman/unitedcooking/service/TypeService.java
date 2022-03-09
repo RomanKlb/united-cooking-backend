@@ -9,7 +9,7 @@ import fr.open.roman.unitedcooking.models.Type;
 
 public interface TypeService {
 
-	void createType(@Valid String name);
+	Type createType(@Valid String name);
 	
 	Optional<Type> recoveryTypeByName(String name);
 	Optional<Type> recoveryTypeById(Long id);

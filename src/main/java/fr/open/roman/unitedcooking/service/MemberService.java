@@ -10,7 +10,7 @@ import fr.open.roman.unitedcooking.payload.request.SignupMemberRequest;
 
 public interface MemberService {
 
-	void createMember(@Valid SignupMemberRequest signupMemberRequest);
+	Member createMember(@Valid SignupMemberRequest signupMemberRequest);
 	
 	Optional<Member> recoveryMemberByPseudo(String pseudo);
 	

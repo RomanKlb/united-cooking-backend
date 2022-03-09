@@ -23,8 +23,8 @@ public class TypeServiceImpl implements TypeService{
 	
 
 	@Override
-	public void createType(@Valid String name) {
-		typeRepository.save(new Type(name));
+	public Type createType(@Valid String name) {
+		return typeRepository.save(new Type(name));
 	}
 
 	@Override
