@@ -42,4 +42,14 @@ public class CategoryServiceImpl implements CategoryService {
 		return categoryRepository.findAll();
 	}
 
+	@Override
+	public boolean deleteCategory(Long id) {
+		if(categoryRepository.existsById(id)) {
+			categoryRepository.deleteById(id);
+			return true;
+		} else {
+			return false;
+		}
+	}
+
 }

@@ -5,6 +5,7 @@ import javax.annotation.PostConstruct;
 import org.springframework.stereotype.Controller;
 
 import fr.open.roman.unitedcooking.models.enums.ERole;
+import fr.open.roman.unitedcooking.models.exception.AlreadyTypeCreatedException;
 import fr.open.roman.unitedcooking.payload.request.SignupAdminRequest;
 import fr.open.roman.unitedcooking.payload.request.SignupMemberRequest;
 import fr.open.roman.unitedcooking.service.AdminService;
@@ -41,7 +42,7 @@ public class initController {
 
 
 	@PostConstruct
-	private void init() {
+	private void init() throws AlreadyTypeCreatedException {
 		initRoles();
 		initCategories();
 		initTypes();
@@ -114,7 +115,7 @@ public class initController {
 		}
 	}
 
-	private void initTypes() {
+	private void initTypes() throws AlreadyTypeCreatedException {
 		if(typeService.recoveryAllTypes().size() < 1) {
 			typeService.createType("Healthy food");
 			typeService.createType("Junk food");

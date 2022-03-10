@@ -52,6 +52,11 @@ public class AdminServiceImpl implements AdminService {
 	}
 
 	@Override
+	public Optional<Admin> recoveryAdminById(Long id) {
+		return adminRepository.findById(id);
+	}
+	
+	@Override
 	public Optional<Admin> recoveryAdminByPseudo(String pseudo) {
 		return adminRepository.findByPseudo(pseudo);
 	}
@@ -69,6 +74,16 @@ public class AdminServiceImpl implements AdminService {
 	@Override
 	public List<Admin> recoveryAllAdmins() {
 		return adminRepository.findAll();
+	}
+
+	@Override
+	public boolean deleteAdmin(Long id) {
+		if(adminRepository.existsById(id)) {
+			adminRepository.deleteById(id);
+			return true;
+		} else {
+			return false;
+		}
 	}
 
 }

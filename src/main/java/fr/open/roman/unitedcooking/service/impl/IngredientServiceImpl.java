@@ -42,4 +42,15 @@ public class IngredientServiceImpl implements IngredientService{
 		return ingredientRepository.findAll();
 	}
 
+
+	@Override
+	public boolean deleteIngredient(Long id) {
+		if(ingredientRepository.existsById(id)) {
+			ingredientRepository.deleteById(id);
+			return true;
+		} else {
+			return false;
+		}
+	}
+
 }

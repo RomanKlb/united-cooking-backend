@@ -15,4 +15,6 @@ public interface CategoryService {
 	Optional<Category> recoveryCategoryById(Long id);
 	
 	List<Category> recoveryAllCategories();
+	
+	boolean deleteCategory(Long id);
 }

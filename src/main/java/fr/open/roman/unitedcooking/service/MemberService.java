@@ -12,10 +12,13 @@ public interface MemberService {
 
 	Member createMember(@Valid SignupMemberRequest signupMemberRequest);
 	
+	Optional<Member> recoveryMemberById(Long id);
 	Optional<Member> recoveryMemberByPseudo(String pseudo);
 	
 	Boolean existsByPseudo(String pseudo);
 	Boolean existsByEmail(String email);
 	
 	List<Member> recoveryAllMembers();
+	
+	boolean deleteMember(Long id);
 }

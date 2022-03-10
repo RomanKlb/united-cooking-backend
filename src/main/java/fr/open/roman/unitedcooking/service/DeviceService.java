@@ -16,4 +16,6 @@ public interface DeviceService {
 	Optional<Device> recoveryCategoryById(Long id);
 	
 	List<Device> recoveryAllDevices();
+	
+	boolean deleteDevice(Long id);
 }

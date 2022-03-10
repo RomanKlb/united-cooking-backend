@@ -16,4 +16,6 @@ public interface IngredientService {
 	Optional<Ingredient> recoveryIngredientById(Long id);
 
 	List<Ingredient> recoveryAllIngredients();
+	
+	boolean deleteIngredient(Long id);
 }

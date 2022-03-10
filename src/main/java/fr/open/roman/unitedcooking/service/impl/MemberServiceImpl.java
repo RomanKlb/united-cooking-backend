@@ -49,6 +49,11 @@ public class MemberServiceImpl implements MemberService{
 	}
 
 	@Override
+	public Optional<Member> recoveryMemberById(Long id) {
+		return memberRepository.findById(id);
+	}
+
+	@Override
 	public Optional<Member> recoveryMemberByPseudo(String pseudo) {
 		return memberRepository.findByPseudo(pseudo);
 	}
@@ -66,6 +71,16 @@ public class MemberServiceImpl implements MemberService{
 	@Override
 	public List<Member> recoveryAllMembers() {
 		return memberRepository.findAll();
+	}
+
+	@Override
+	public boolean deleteMember(Long id) {
+		if(memberRepository.existsById(id)) {
+			memberRepository.deleteById(id);
+			return true;
+		} else {
+			return false;
+		}
 	}
 
 }

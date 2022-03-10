@@ -116,4 +116,15 @@ public class CookingRecipeServiceImpl implements CookingRecipeService{
 	}
 
 
+	@Override
+	public boolean deleteCookingRecipe(Long id) {
+		if(cookingRecipeRepository.existsById(id)) {
+			cookingRecipeRepository.deleteById(id);
+			return true;
+		} else {
+			return false;
+		}
+	}
+
+
 }

@@ -20,4 +20,6 @@ public interface CookingRecipeService {
 	Optional<CookingRecipe> recoveryCookingRecipeById(Long id);
 	
 	List<CookingRecipe> recoveryAllCookingRecipes();
+	
+	boolean deleteCookingRecipe(Long id);
 }

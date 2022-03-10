@@ -2,6 +2,7 @@ package fr.open.roman.unitedcooking.service.integration;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertNotNull;
+import static org.junit.jupiter.api.Assertions.assertThrows;
 
 import org.junit.jupiter.api.MethodOrderer;
 import org.junit.jupiter.api.Order;
@@ -11,6 +12,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 
 import fr.open.roman.unitedcooking.models.Type;
+import fr.open.roman.unitedcooking.models.exception.AlreadyTypeCreatedException;
 import fr.open.roman.unitedcooking.service.TypeService;
 
 @SpringBootTest
@@ -21,41 +23,46 @@ class TypeServiceIT {
 	private TypeService typeService;
 
 
-	//	private static ValidatorFactory validatorFactory;
-	//	private static Validator validator;
-	//
-	//	@BeforeAll
-	//	public static void createValidator() {
-	//		validatorFactory = Validation.buildDefaultValidatorFactory();
-	//		validator = validatorFactory.getValidator();
-	//	}
-	//
-	//	@AfterAll
-	//	public static void close() {
-	//		validatorFactory.close();
-	//	}
+//	private static ValidatorFactory validatorFactory;
+//	private static Validator validator;
+//
+//	@BeforeAll
+//	public static void createValidator() {
+//		validatorFactory = Validation.buildDefaultValidatorFactory();
+//		validator = validatorFactory.getValidator();
+//	}
+//
+//	@AfterAll
+//	public static void close() {
+//		validatorFactory.close();
+//	}
 
 	@Test
 	@Order(1)
-	void createType_perfectName_shouldSuccess() {
-		Type type = typeService.createType("PornFood");
+	void createType_perfectName_shouldSuccess() throws AlreadyTypeCreatedException {
+		Type type = typeService.createType("Porn food");
 
 		assertNotNull(type);
-		assertEquals("PornFood", type.getName());
+		assertEquals("Porn food", type.getName());
 
 		int size = typeService.recoveryAllTypes().size();
-		assertEquals("PornFood", typeService.recoveryTypeById((long)size).get().getName());
+		assertEquals("Porn food", typeService.recoveryTypeById((long)size).get().getName());
 	}
-
+	
 	@Test
 	@Order(2)
-	void createType_noName_shouldFail() {
-		//		Type type = typeService.createType("");
-		//		
-		//	    Set<ConstraintViolation<Type>> violations = validator.validate(type);
-		//System.out.println("HERE VIOLATIONS : =>>>>>>>>>          " + violations);
-		//	    assertFalse(violations.isEmpty());
+	void createType_sameName_shouldFail() throws AlreadyTypeCreatedException {
+		assertThrows(AlreadyTypeCreatedException.class, () -> typeService.createType("Porn food"));
 	}
+
+//	@Test
+//	@Order(2)
+//	void createType_noName_shouldFail() {
+//		Type type = typeService.createType("");
+//
+//		Set<ConstraintViolation<Type>> violations = validator.validate(type);
+//		assertEquals(1, violations.stream().count());
+//	}
 
 	//	@Test
 	//	@Order(3)

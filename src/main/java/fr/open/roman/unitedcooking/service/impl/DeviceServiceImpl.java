@@ -41,6 +41,16 @@ public class DeviceServiceImpl implements DeviceService{
 	public List<Device> recoveryAllDevices() {
 		return deviceRepository.findAll();
 	}
+
+	@Override
+	public boolean deleteDevice(Long id) {
+		if(deviceRepository.existsById(id)) {
+			deviceRepository.deleteById(id);
+			return true;
+		} else {
+			return false;
+		}
+	}
 	
 	
 	

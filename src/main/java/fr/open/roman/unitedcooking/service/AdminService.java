@@ -12,10 +12,13 @@ public interface AdminService {
 
 	Admin createAdmin(@Valid SignupAdminRequest signupAdminRequest);
 	
+	Optional<Admin> recoveryAdminById(Long id);
 	Optional<Admin> recoveryAdminByPseudo(String pseudo);
 	
 	Boolean existsByPseudo(String pseudo);
 	Boolean existsByEmail(String email);
 	
 	List<Admin> recoveryAllAdmins();
+	
+	boolean deleteAdmin(Long id);
 }
