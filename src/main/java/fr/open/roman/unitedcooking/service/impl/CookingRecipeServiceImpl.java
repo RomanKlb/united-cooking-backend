@@ -6,6 +6,8 @@ import java.util.Optional;
 
 import javax.validation.Valid;
 
+import org.springframework.stereotype.Service;
+
 import fr.open.roman.unitedcooking.models.Category;
 import fr.open.roman.unitedcooking.models.CookingRecipe;
 import fr.open.roman.unitedcooking.models.Device;
@@ -13,9 +15,9 @@ import fr.open.roman.unitedcooking.models.Ingredient;
 import fr.open.roman.unitedcooking.models.Member;
 import fr.open.roman.unitedcooking.models.Type;
 import fr.open.roman.unitedcooking.models.dto.CookingRecipeReceipt;
-import fr.open.roman.unitedcooking.models.exception.NotFoundCategoryException;
-import fr.open.roman.unitedcooking.models.exception.NotFoundMemberException;
-import fr.open.roman.unitedcooking.models.exception.NotFoundTypeException;
+import fr.open.roman.unitedcooking.models.exception.notfound.NotFoundCategoryException;
+import fr.open.roman.unitedcooking.models.exception.notfound.NotFoundMemberException;
+import fr.open.roman.unitedcooking.models.exception.notfound.NotFoundTypeException;
 import fr.open.roman.unitedcooking.repositories.CookingRecipeRepository;
 import fr.open.roman.unitedcooking.service.CategoryService;
 import fr.open.roman.unitedcooking.service.CookingRecipeService;
@@ -24,6 +26,7 @@ import fr.open.roman.unitedcooking.service.IngredientService;
 import fr.open.roman.unitedcooking.service.MemberService;
 import fr.open.roman.unitedcooking.service.TypeService;
 
+@Service
 public class CookingRecipeServiceImpl implements CookingRecipeService{
 
 	private final CookingRecipeRepository cookingRecipeRepository;
@@ -124,6 +127,18 @@ public class CookingRecipeServiceImpl implements CookingRecipeService{
 		} else {
 			return false;
 		}
+	}
+
+
+	@Override
+	public Boolean existsByName(String name) {
+		return cookingRecipeRepository.existsByName(name);
+	}
+
+
+	@Override
+	public Boolean existsById(Long id) {
+		return cookingRecipeRepository.existsById(id);
 	}
 
 

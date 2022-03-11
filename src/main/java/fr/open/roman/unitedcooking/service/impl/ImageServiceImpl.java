@@ -9,14 +9,16 @@ import java.nio.file.Paths;
 import java.nio.file.StandardCopyOption;
 import java.util.Optional;
 
+import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
 
 import fr.open.roman.unitedcooking.models.CookingRecipe;
 import fr.open.roman.unitedcooking.models.Image;
-import fr.open.roman.unitedcooking.models.exception.NotFoundCookingRecipeException;
+import fr.open.roman.unitedcooking.models.exception.notfound.NotFoundCookingRecipeException;
 import fr.open.roman.unitedcooking.service.CookingRecipeService;
 import fr.open.roman.unitedcooking.service.ImageService;
 
+@Service
 public class ImageServiceImpl implements ImageService{
 
 	private static final String DOSSIER_IMAGES = "src/main/webapp/images/";

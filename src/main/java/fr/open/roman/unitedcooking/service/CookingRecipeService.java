@@ -7,9 +7,9 @@ import javax.validation.Valid;
 
 import fr.open.roman.unitedcooking.models.CookingRecipe;
 import fr.open.roman.unitedcooking.models.dto.CookingRecipeReceipt;
-import fr.open.roman.unitedcooking.models.exception.NotFoundCategoryException;
-import fr.open.roman.unitedcooking.models.exception.NotFoundMemberException;
-import fr.open.roman.unitedcooking.models.exception.NotFoundTypeException;
+import fr.open.roman.unitedcooking.models.exception.notfound.NotFoundCategoryException;
+import fr.open.roman.unitedcooking.models.exception.notfound.NotFoundMemberException;
+import fr.open.roman.unitedcooking.models.exception.notfound.NotFoundTypeException;
 
 
 public interface CookingRecipeService {
@@ -22,4 +22,8 @@ public interface CookingRecipeService {
 	List<CookingRecipe> recoveryAllCookingRecipes();
 	
 	boolean deleteCookingRecipe(Long id);
+	
+	Boolean existsByName(String name);
+
+	Boolean existsById(Long id);
 }

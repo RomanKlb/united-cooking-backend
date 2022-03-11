@@ -4,7 +4,7 @@ import java.io.IOException;
 
 import org.springframework.web.multipart.MultipartFile;
 
-import fr.open.roman.unitedcooking.models.exception.NotFoundCookingRecipeException;
+import fr.open.roman.unitedcooking.models.exception.notfound.NotFoundCookingRecipeException;
 
 public interface ImageService {
 

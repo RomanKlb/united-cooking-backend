@@ -8,4 +8,6 @@ import fr.open.roman.unitedcooking.models.CookingRecipe;
 @Repository
 public interface CookingRecipeRepository extends JpaRepository<CookingRecipe, Long>{
 
+	Boolean existsByName(String name);
+	
 }
