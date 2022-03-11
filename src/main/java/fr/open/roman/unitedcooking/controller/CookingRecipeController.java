@@ -14,6 +14,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.validation.BindingResult;
 import org.springframework.validation.ObjectError;
 import org.springframework.web.bind.annotation.CrossOrigin;
+import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -76,24 +77,36 @@ public class CookingRecipeController {
 				log.error("Validation error ->" + objectError.getDefaultMessage());
 			}
 		}
-		return cookingRecipeService.createcookingRecipe(cookingRecipeReceipt);
+		return cookingRecipeService.createCookingRecipeAndAddInListOfCreatedRecipesOfMember(cookingRecipeReceipt);
 	}
 
 	@GetMapping("/{id}")
 	public CookingRecipe recoveryOneCookingRecipe(@PathVariable Long id) throws NotFoundCookingRecipeException{
 		log.info("recoveryOneCookingRecipe in CookingRecipeController est appelée");
-		if(cookingRecipeService.existsById(id)) {
-			Optional<CookingRecipe> cookingRecipe = cookingRecipeService.recoveryCookingRecipeById(id);
+		
+		Optional<CookingRecipe> cookingRecipe = cookingRecipeService.recoveryCookingRecipeById(id);
+		if(cookingRecipe.isPresent()) {
 			return cookingRecipe.get();
 		} else {
 			throw new NotFoundCookingRecipeException("La recette avec pour id = " + id + " n'a pas été trouvé !");
 		}
 	}
-	
+
 	@GetMapping("/all")
 	public List<CookingRecipe> recoveryAllCookingRecipes() {
 		log.info("recoveryAllCookingRecipes in CookingRecipeController est appelée");
 		return cookingRecipeService.recoveryAllCookingRecipes();
+	}
+
+	@DeleteMapping("/{id}/delete")
+	public boolean deleteOneCookingRecipe(@PathVariable Long id) {
+		
+		Optional<CookingRecipe> cookingRecipe = cookingRecipeService.recoveryCookingRecipeById(id);
+		if(cookingRecipe.isPresent()) {
+			return cookingRecipeService.deleteCookingRecipe(id);
+		} else {
+			return false;
+		}
 	}
 }
 

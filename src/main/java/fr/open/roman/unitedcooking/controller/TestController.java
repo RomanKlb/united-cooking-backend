@@ -11,20 +11,20 @@ import org.springframework.web.bind.annotation.RestController;
 @RequestMapping("/unitedcooking/test")
 public class TestController {
 
-	@GetMapping("/all")
-	public String allAccess() {
-		return "Public Content.";
-	}
-	
-	@GetMapping("/member")
-	@PreAuthorize("hasRole('MEMBER') or hasRole('ADMIN')")
-	public String memberAccess() {
-		return "Member Content.";
-	}
-	
-	@GetMapping("/admin")
-	@PreAuthorize("hasRole('ADMIN')")
-	public String adminAccess() {
-		return "Admin Board.";
-	}
+//	@GetMapping("/all")
+//	public String allAccess() {
+//		return "Public Content.";
+//	}
+//	
+//	@GetMapping("/member")
+//	@PreAuthorize("hasRole('MEMBER') or hasRole('ADMIN')")
+//	public String memberAccess() {
+//		return "Member Content.";
+//	}
+//	
+//	@GetMapping("/admin")
+//	@PreAuthorize("hasRole('ADMIN')")
+//	public String adminAccess() {
+//		return "Admin Board.";
+//	}
 }

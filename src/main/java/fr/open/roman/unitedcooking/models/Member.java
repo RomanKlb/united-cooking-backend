@@ -6,6 +6,7 @@ import javax.persistence.CascadeType;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
 import javax.persistence.JoinTable;
+import javax.persistence.ManyToMany;
 import javax.persistence.OneToMany;
 import javax.validation.constraints.Email;
 import javax.validation.constraints.NotBlank;
@@ -45,7 +46,7 @@ public class Member extends User {
 
 	@JsonIgnore
 	@ToString.Exclude
-	@OneToMany(targetEntity=CookingRecipe.class, fetch = FetchType.LAZY)
+	@ManyToMany(targetEntity=CookingRecipe.class, fetch = FetchType.LAZY)
 	@JoinTable(name = "favoritesOfCookingRecipes")
 	private List<CookingRecipe> favoritesOfCookingRecipes;
 	

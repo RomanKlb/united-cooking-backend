@@ -49,9 +49,12 @@ public class CookingRecipeServiceImpl implements CookingRecipeService{
 
 
 	@Override
-	public CookingRecipe createcookingRecipe(@Valid CookingRecipeReceipt dto) 
+	public CookingRecipe createCookingRecipeAndAddInListOfCreatedRecipesOfMember(@Valid CookingRecipeReceipt dto) 
 			throws NotFoundCategoryException, NotFoundTypeException, NotFoundMemberException {
-		return cookingRecipeRepository.save(new CookingRecipe(
+		
+		Member member = RecuperationOfMember(dto.getMemberPseudo());
+		
+		CookingRecipe cookingRecipe = cookingRecipeRepository.save(new CookingRecipe(
 				dto.getName(), 
 				dto.getPreparationTime(), 
 				dto.getCookingTime(), 
@@ -60,8 +63,12 @@ public class CookingRecipeServiceImpl implements CookingRecipeService{
 				selectionOfDevices(dto.getDevices()), 
 				RecuperationOfCategory(dto.getCategoryName()), 
 				RecuperationOfType(dto.getTypeName()), 
-				RecuperationOfMember(dto.getMemberPseudo())
+				member
 				));
+
+		memberService.addToListOfCreatedCookingRecipes(member, cookingRecipe);
+		
+		return cookingRecipe;
 	}
 
 	private Member RecuperationOfMember(String memberPseudo) throws NotFoundMemberException {
@@ -69,7 +76,7 @@ public class CookingRecipeServiceImpl implements CookingRecipeService{
 			return memberService.recoveryMemberByPseudo(memberPseudo).get();
 		}
 		throw new NotFoundMemberException("Le membre n'a pas été trouvé !"); 
-		
+
 	}
 	private Type RecuperationOfType(String typeName) throws NotFoundTypeException {
 		if(typeService.recoveryTypeByName(typeName).isPresent()) {
@@ -107,7 +114,6 @@ public class CookingRecipeServiceImpl implements CookingRecipeService{
 		return listOfIngredientsSelected;
 	}
 
-
 	@Override
 	public Optional<CookingRecipe> recoveryCookingRecipeById(Long id) {
 		return cookingRecipeRepository.findById(id);
@@ -117,7 +123,6 @@ public class CookingRecipeServiceImpl implements CookingRecipeService{
 	public List<CookingRecipe> recoveryAllCookingRecipes() {
 		return cookingRecipeRepository.findAll();
 	}
-
 
 	@Override
 	public boolean deleteCookingRecipe(Long id) {
@@ -129,12 +134,10 @@ public class CookingRecipeServiceImpl implements CookingRecipeService{
 		}
 	}
 
-
 	@Override
 	public Boolean existsByName(String name) {
 		return cookingRecipeRepository.existsByName(name);
 	}
-
 
 	@Override
 	public Boolean existsById(Long id) {

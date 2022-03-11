@@ -12,11 +12,15 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
+import fr.open.roman.unitedcooking.models.CookingRecipe;
 import fr.open.roman.unitedcooking.models.Member;
 import fr.open.roman.unitedcooking.models.Role;
 import fr.open.roman.unitedcooking.models.enums.ERole;
+import fr.open.roman.unitedcooking.models.exception.notfound.NotFoundCookingRecipeException;
+import fr.open.roman.unitedcooking.models.exception.notfound.NotFoundMemberException;
 import fr.open.roman.unitedcooking.payload.request.SignupMemberRequest;
 import fr.open.roman.unitedcooking.repositories.MemberRepository;
+import fr.open.roman.unitedcooking.service.CookingRecipeService;
 import fr.open.roman.unitedcooking.service.MemberService;
 import fr.open.roman.unitedcooking.service.RoleService;
 
@@ -27,11 +31,13 @@ public class MemberServiceImpl implements MemberService{
 
 	private final RoleService roleService;
 	private final MemberRepository memberRepository;
+	private final CookingRecipeService cookingRecipeService;
 
-	public MemberServiceImpl(MemberRepository memberRepository, RoleService roleService) {
+	public MemberServiceImpl(MemberRepository memberRepository, RoleService roleService, CookingRecipeService cookingRecipeService) {
 		super();
 		this.roleService = roleService;
 		this.memberRepository = memberRepository;
+		this.cookingRecipeService = cookingRecipeService;
 	}
 
 
@@ -81,6 +87,27 @@ public class MemberServiceImpl implements MemberService{
 		} else {
 			return false;
 		}
+	}
+
+	@Override
+	public void addToListOfCreatedCookingRecipes(Member member, CookingRecipe cookingRecipe) throws NotFoundMemberException {
+		member.getCreatedCookingRecipes().add(cookingRecipe);
+		memberRepository.save(member);
+	}
+
+
+	@Override
+	public void addToListOfFavoritesCookingRecipes(Long idCookingRecipe, Long idMember) throws NotFoundMemberException, NotFoundCookingRecipeException {
+		Optional<Member> member = memberRepository.findById(idMember);
+		Optional<CookingRecipe> cookingRecipe = cookingRecipeService.recoveryCookingRecipeById(idMember);
+		if(member.isPresent()) {
+			if(cookingRecipe.isPresent()) {
+				member.get().getFavoritesOfCookingRecipes().add(cookingRecipe.get());
+				memberRepository.save(member.get());
+			}
+			throw new NotFoundCookingRecipeException("La recette n'a pas été trouvé pour permettre l'enregistrement d'une recette en favori !");
+		}
+		throw new NotFoundMemberException("Le membre n'a pas été trouvé pour permettre l'enregistrement d'une recette en favori !");
 	}
 
 }
