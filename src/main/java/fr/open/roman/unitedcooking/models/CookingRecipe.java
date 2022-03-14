@@ -87,7 +87,7 @@ public class CookingRecipe {
 	private Type type;
 	
 	@NotNull(message = "Le membre doit être présent")
-	@OneToOne
+	@ManyToOne
 	private Member member;
 	
 	@OneToOne

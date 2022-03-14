@@ -35,35 +35,35 @@ public class AuthController {
 
 	@Autowired
 	AuthenticationManager authenticationManager;
-	
+
 	@Autowired
 	AdminService adminService;
-	
+
 	@Autowired
 	MemberService memberService;
-	
+
 	@Autowired
 	RoleService roleService;
-	
+
 	@Autowired
 	JwtUtils jwtUtils;
-	
-	
+
+
 	@PostMapping("/signin")
 	public ResponseEntity<?> authenticateUser(@Valid @RequestBody LoginRequest loginRequest) {
 		Authentication authentication = authenticationManager.authenticate(
 				new UsernamePasswordAuthenticationToken(loginRequest.getPseudo(), loginRequest.getPassword()));
 		SecurityContextHolder.getContext().setAuthentication(authentication);
 		String jwt = jwtUtils.generateJwtToken(authentication);
-		
+
 		UserDetailsImpl userDetails = (UserDetailsImpl) authentication.getPrincipal();		
 		List<String> roles = userDetails.getAuthorities().stream()
 				.map(item -> item.getAuthority())
 				.collect(Collectors.toList());
 		return ResponseEntity.ok(new JwtResponse(jwt, userDetails.getId(), userDetails.getPseudo(), userDetails.getEmail(), roles));
 	}
-	
-	
+
+
 	@PostMapping("/signup")
 	public ResponseEntity<?> registerMember(@Valid @RequestBody SignupMemberRequest signupMemberRequest) {
 		if (adminService.existsByPseudo(signupMemberRequest.getPseudo()) || memberService.existsByPseudo(signupMemberRequest.getPseudo())) {
@@ -71,18 +71,18 @@ public class AuthController {
 					.badRequest()
 					.body(new MessageResponse("Le pseudo est déjà pris !"));
 		}
-		
+
 		if (adminService.existsByEmail(signupMemberRequest.getEmail()) || memberService.existsByPseudo(signupMemberRequest.getEmail())) {
 			return ResponseEntity
 					.badRequest()
 					.body(new MessageResponse("L'adresse email est déjà prise !"));
 		}
-		
+
 		memberService.createMember(signupMemberRequest);
 		return ResponseEntity.ok(new MessageResponse("Vous êtes maintenant membre de United Cooking! Votre pseudo est : " + signupMemberRequest.getPseudo()));
 	}
-	
-	
+
+
 	@PostMapping("/signup-admin")
 	public ResponseEntity<?> registerAdmin(@Valid @RequestBody SignupAdminRequest signupAdminRequest) {
 		if (adminService.existsByPseudo(signupAdminRequest.getPseudo()) || memberService.existsByPseudo(signupAdminRequest.getPseudo())) {
@@ -90,7 +90,7 @@ public class AuthController {
 					.badRequest()
 					.body(new MessageResponse("Le pseudo est déjà pris !"));
 		}
-		
+
 		if (adminService.existsByEmail(signupAdminRequest.getEmail()) || memberService.existsByPseudo(signupAdminRequest.getEmail())) {
 			return ResponseEntity
 					.badRequest()
@@ -99,4 +99,11 @@ public class AuthController {
 		adminService.createAdmin(signupAdminRequest);
 		return ResponseEntity.ok(new MessageResponse("Vous êtes maintenant admin de United Cooking! Votre pseudo est : " + signupAdminRequest.getPseudo()));
 	}
+
+//	@DeleteMapping("/logout")
+//	public void revokeToken() {
+//		if(SecurityContextHolder.getContext().getAuthentication().isAuthenticated()) {
+//			SecurityContextHolder.clearContext();
+//		}
+//	}
 }

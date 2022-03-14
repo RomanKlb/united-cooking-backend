@@ -113,6 +113,11 @@ public class CookingRecipeServiceImpl implements CookingRecipeService{
 		}
 		return listOfIngredientsSelected;
 	}
+	
+	@Override
+	public CookingRecipe patchModerateByAdmin(CookingRecipe cookingRecipe) {
+		return cookingRecipeRepository.save(cookingRecipe);
+	}
 
 	@Override
 	public Optional<CookingRecipe> recoveryCookingRecipeById(Long id) {
@@ -123,10 +128,17 @@ public class CookingRecipeServiceImpl implements CookingRecipeService{
 	public List<CookingRecipe> recoveryAllCookingRecipes() {
 		return cookingRecipeRepository.findAll();
 	}
+	
+	@Override
+	public List<CookingRecipe> recoveryAllCookingRecipesModerateByAdmin() {
+		return cookingRecipeRepository.findAll().stream().filter(admin -> admin.getAdmin() != null).toList();
+	}
 
 	@Override
 	public boolean deleteCookingRecipe(Long id) {
 		if(cookingRecipeRepository.existsById(id)) {
+			Member member = cookingRecipeRepository.findById(id).get().getMember();
+			memberService.deleteToListOfCreatedCookingRecipes(member, recoveryCookingRecipeById(id).get());
 			cookingRecipeRepository.deleteById(id);
 			return true;
 		} else {

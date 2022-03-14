@@ -1,5 +1,6 @@
 package fr.open.roman.unitedcooking.service.impl;
 
+import java.time.LocalDateTime;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Optional;
@@ -12,11 +13,14 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import fr.open.roman.unitedcooking.models.Admin;
+import fr.open.roman.unitedcooking.models.CookingRecipe;
 import fr.open.roman.unitedcooking.models.Role;
 import fr.open.roman.unitedcooking.models.enums.ERole;
+import fr.open.roman.unitedcooking.models.exception.notfound.NotfoundAdminException;
 import fr.open.roman.unitedcooking.payload.request.SignupAdminRequest;
 import fr.open.roman.unitedcooking.repositories.AdminRepository;
 import fr.open.roman.unitedcooking.service.AdminService;
+import fr.open.roman.unitedcooking.service.CookingRecipeService;
 import fr.open.roman.unitedcooking.service.RoleService;
 
 @Service
@@ -27,11 +31,13 @@ public class AdminServiceImpl implements AdminService {
 
 	private final AdminRepository adminRepository;
 	private final RoleService roleService;
+	private final CookingRecipeService cookingRecipeService;
 
-	public AdminServiceImpl(AdminRepository adminRepository, RoleService roleService) {
+	public AdminServiceImpl(AdminRepository adminRepository, RoleService roleService, CookingRecipeService cookingRecipeService) {
 		super();
 		this.adminRepository = adminRepository;
 		this.roleService = roleService;
+		this.cookingRecipeService = cookingRecipeService;
 	}
 
 
@@ -84,6 +90,17 @@ public class AdminServiceImpl implements AdminService {
 		} else {
 			return false;
 		}
+	}
+
+
+	@Override
+	public void moderateOneOfCookingRecipe(CookingRecipe cookingRecipe, Long idAdmin) throws NotfoundAdminException {
+		if(adminRepository.existsById(idAdmin)) {
+			cookingRecipe.setAdmin(adminRepository.findById(idAdmin).get());
+			cookingRecipe.setModerateCookingRecipe(LocalDateTime.now());
+			cookingRecipeService.patchModerateByAdmin(cookingRecipe);
+		}
+		throw new NotfoundAdminException("L'admin n'a pas été trouvé pour permettre la modération de la recette " + cookingRecipe.getName());
 	}
 
 }

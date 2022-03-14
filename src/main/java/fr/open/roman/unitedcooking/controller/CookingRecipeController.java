@@ -83,7 +83,7 @@ public class CookingRecipeController {
 	@GetMapping("/{id}")
 	public CookingRecipe recoveryOneCookingRecipe(@PathVariable Long id) throws NotFoundCookingRecipeException{
 		log.info("recoveryOneCookingRecipe in CookingRecipeController est appelée");
-		
+
 		Optional<CookingRecipe> cookingRecipe = cookingRecipeService.recoveryCookingRecipeById(id);
 		if(cookingRecipe.isPresent()) {
 			return cookingRecipe.get();
@@ -92,21 +92,22 @@ public class CookingRecipeController {
 		}
 	}
 
-	@GetMapping("/all")
-	public List<CookingRecipe> recoveryAllCookingRecipes() {
-		log.info("recoveryAllCookingRecipes in CookingRecipeController est appelée");
+	@GetMapping("/admin/all")
+	public List<CookingRecipe> recoveryAllCookingRecipesForAdmin() {
+		log.info("recoveryAllCookingRecipesForAdmin in CookingRecipeController est appelée");
 		return cookingRecipeService.recoveryAllCookingRecipes();
+	}
+	
+	@GetMapping("/all")
+	public List<CookingRecipe> recoveryAllCookingRecipesModerateByAdmin() {
+		log.info("recoveryAllCookingRecipesModerateByAdmin in CookingRecipeController est appelée");
+		return cookingRecipeService.recoveryAllCookingRecipesModerateByAdmin();
 	}
 
 	@DeleteMapping("/{id}/delete")
 	public boolean deleteOneCookingRecipe(@PathVariable Long id) {
-		
-		Optional<CookingRecipe> cookingRecipe = cookingRecipeService.recoveryCookingRecipeById(id);
-		if(cookingRecipe.isPresent()) {
-			return cookingRecipeService.deleteCookingRecipe(id);
-		} else {
-			return false;
-		}
+		log.info("deleteOneCookingRecipe in CookingRecipeController est appelée");
+		return cookingRecipeService.deleteCookingRecipe(id);
 	}
 }
 

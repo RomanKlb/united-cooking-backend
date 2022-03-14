@@ -6,6 +6,8 @@ import java.util.Optional;
 import javax.validation.Valid;
 
 import fr.open.roman.unitedcooking.models.Admin;
+import fr.open.roman.unitedcooking.models.CookingRecipe;
+import fr.open.roman.unitedcooking.models.exception.notfound.NotfoundAdminException;
 import fr.open.roman.unitedcooking.payload.request.SignupAdminRequest;
 
 public interface AdminService {
@@ -21,4 +23,6 @@ public interface AdminService {
 	List<Admin> recoveryAllAdmins();
 	
 	boolean deleteAdmin(Long id);
+
+	void moderateOneOfCookingRecipe(CookingRecipe cookingRecipe, Long idAdmin) throws NotfoundAdminException;
 }

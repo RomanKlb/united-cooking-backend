@@ -17,13 +17,17 @@ public interface CookingRecipeService {
 	CookingRecipe createCookingRecipeAndAddInListOfCreatedRecipesOfMember(@Valid CookingRecipeReceipt cookingRecipeReceipt) 
 			throws NotFoundCategoryException, NotFoundTypeException, NotFoundMemberException;
 	
+	CookingRecipe patchModerateByAdmin(CookingRecipe cookingRecipe);
+	
 	Optional<CookingRecipe> recoveryCookingRecipeById(Long id);
 	
 	List<CookingRecipe> recoveryAllCookingRecipes();
+	List<CookingRecipe> recoveryAllCookingRecipesModerateByAdmin();
 	
 	boolean deleteCookingRecipe(Long id);
 	
 	Boolean existsByName(String name);
 
 	Boolean existsById(Long id);
+
 }
