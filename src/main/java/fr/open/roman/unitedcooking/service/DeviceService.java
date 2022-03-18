@@ -18,4 +18,6 @@ public interface DeviceService {
 	List<Device> recoveryAllDevices();
 	
 	boolean deleteDevice(Long id);
+
+	boolean existsByName(String name);
 }

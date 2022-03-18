@@ -11,5 +11,7 @@ import fr.open.roman.unitedcooking.models.Device;
 public interface DeviceRepository extends JpaRepository<Device, Long>{
 
 	Optional<Device> findByName(String name);
+
+	boolean existsByName(String name);
 	
 }

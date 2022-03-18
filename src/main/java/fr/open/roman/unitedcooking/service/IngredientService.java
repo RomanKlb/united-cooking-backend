@@ -18,4 +18,6 @@ public interface IngredientService {
 	List<Ingredient> recoveryAllIngredients();
 	
 	boolean deleteIngredient(Long id);
+
+	boolean existsByName(String name);
 }

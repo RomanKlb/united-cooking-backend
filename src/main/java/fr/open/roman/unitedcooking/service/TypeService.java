@@ -18,4 +18,6 @@ public interface TypeService {
 	List<Type> recoveryAllTypes();
 	
 	boolean deleteType(Long id);
+
+	boolean existsByName(String name);
 }

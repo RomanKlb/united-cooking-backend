@@ -53,4 +53,10 @@ public class IngredientServiceImpl implements IngredientService{
 		}
 	}
 
+
+	@Override
+	public boolean existsByName(String name) {
+		return ingredientRepository.existsByName(name);
+		}
+
 }

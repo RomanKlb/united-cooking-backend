@@ -56,6 +56,12 @@ public class TypeServiceImpl implements TypeService{
 			return false;
 		}
 	}
+
+
+	@Override
+	public boolean existsByName(String name) {
+		return typeRepository.existsByName(name);
+	}
 	
 	
 }

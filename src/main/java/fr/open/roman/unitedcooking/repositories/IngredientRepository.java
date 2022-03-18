@@ -11,4 +11,6 @@ import fr.open.roman.unitedcooking.models.Ingredient;
 public interface IngredientRepository extends JpaRepository<Ingredient, Long>{
 
 	Optional<Ingredient> findByName(String name);
+
+	boolean existsByName(String name);
 }

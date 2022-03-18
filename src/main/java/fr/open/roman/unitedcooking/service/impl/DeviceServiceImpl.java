@@ -51,6 +51,12 @@ public class DeviceServiceImpl implements DeviceService{
 			return false;
 		}
 	}
+
+
+	@Override
+	public boolean existsByName(String name) {
+		return deviceRepository.existsByName(name);
+	}
 	
 	
 	

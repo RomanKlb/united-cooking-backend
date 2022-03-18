@@ -11,4 +11,6 @@ import fr.open.roman.unitedcooking.models.Type;
 public interface TypeRepository extends JpaRepository<Type, Long>{
 
 	Optional<Type> findByName(String name);
+
+	boolean existsByName(String name);
 }
