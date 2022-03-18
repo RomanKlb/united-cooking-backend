@@ -29,8 +29,8 @@ import fr.open.roman.unitedcooking.service.MemberService;
 import fr.open.roman.unitedcooking.service.RoleService;
 
 @CrossOrigin(origins = "*", maxAge = 3600)
-@RestController
-@RequestMapping("/unitedcooking/auth")
+@RestController 
+@RequestMapping("unitedcooking/auth")
 public class AuthController {
 
 	@Autowired

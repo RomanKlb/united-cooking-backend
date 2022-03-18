@@ -5,6 +5,7 @@ import java.util.Optional;
 
 import javax.validation.Valid;
 
+
 import fr.open.roman.unitedcooking.models.Category;
 
 public interface CategoryService {
@@ -17,4 +18,6 @@ public interface CategoryService {
 	List<Category> recoveryAllCategories();
 	
 	boolean deleteCategory(Long id);
+
+	boolean existsByName(String name);
 }

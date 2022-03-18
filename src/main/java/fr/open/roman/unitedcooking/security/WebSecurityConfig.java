@@ -56,7 +56,8 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
 		.exceptionHandling().authenticationEntryPoint(unauthorizedHandler).and()
 		.sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS).and()
 		.authorizeRequests().antMatchers("/unitedcooking/auth/**").permitAll()
-		.antMatchers("/unitedcooking/test/**").permitAll()
+		.antMatchers("/unitedcooking/**").permitAll()
+		.antMatchers("/unitedcooking/**").permitAll()
 		.anyRequest().authenticated();
 		http.addFilterBefore(authenticationJwtTokenFilter(), UsernamePasswordAuthenticationFilter.class);
 	}

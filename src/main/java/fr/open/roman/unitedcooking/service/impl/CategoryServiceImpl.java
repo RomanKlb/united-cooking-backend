@@ -52,4 +52,10 @@ public class CategoryServiceImpl implements CategoryService {
 		}
 	}
 
+
+	@Override
+	public boolean existsByName(String name) {
+		return categoryRepository.existsByName(name);
+	}
+
 }

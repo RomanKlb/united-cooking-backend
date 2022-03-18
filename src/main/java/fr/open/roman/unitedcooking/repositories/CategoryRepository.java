@@ -11,4 +11,6 @@ import fr.open.roman.unitedcooking.models.Category;
 public interface CategoryRepository extends JpaRepository<Category, Long>{
 
 	Optional<Category> findByName(String name);
+
+	boolean existsByName(String name);
 }
