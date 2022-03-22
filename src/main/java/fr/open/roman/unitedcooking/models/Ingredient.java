@@ -1,11 +1,16 @@
 package fr.open.roman.unitedcooking.models;
 
+import java.util.List;
+
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.ManyToMany;
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.NotNull;
+
+import com.fasterxml.jackson.annotation.JsonIgnore;
 
 import lombok.EqualsAndHashCode;
 import lombok.Getter;
@@ -28,6 +33,10 @@ public class Ingredient {
 	@NotNull(message = "L'ingrédient ne peut pas être vide")
 	@NotBlank(message = "L'ingrédient doit être complété")
 	private String name;
+	
+	@JsonIgnore
+	@ManyToMany(mappedBy = "ingredients")
+	private List<CookingRecipe> cookingRecipes;
 
 	public Ingredient(String name) {
 		super();

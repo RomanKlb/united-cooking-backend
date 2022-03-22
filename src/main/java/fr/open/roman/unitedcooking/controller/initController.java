@@ -111,7 +111,6 @@ public class initController {
 			deviceService.createDevice("Micro-onde");	
 			deviceService.createDevice("Poêlon");	
 			deviceService.createDevice("Caquelon");	
-			deviceService.createDevice("Thermomix");
 		}
 	}
 

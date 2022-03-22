@@ -1,11 +1,16 @@
 package fr.open.roman.unitedcooking.models;
 
+import java.util.List;
+
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.ManyToMany;
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.NotNull;
+
+import com.fasterxml.jackson.annotation.JsonIgnore;
 
 import lombok.EqualsAndHashCode;
 import lombok.Getter;
@@ -28,6 +33,10 @@ public class Device {
 	@NotNull(message = "Le nom de l'appareil ne peut pas être vide")
 	@NotBlank(message = "Le nom de l'appareil doit être complété")
 	private String name;
+	
+	@JsonIgnore
+	@ManyToMany(mappedBy = "devices")
+	private List<CookingRecipe> cookingRecipes;
 
 	public Device(String name) {
 		super();

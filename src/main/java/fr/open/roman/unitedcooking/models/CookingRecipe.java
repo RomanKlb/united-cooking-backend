@@ -10,11 +10,12 @@ import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
-import javax.persistence.JoinTable;
+import javax.persistence.ManyToMany;
 import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 import javax.persistence.OneToOne;
 import javax.validation.constraints.NotBlank;
+import javax.validation.constraints.NotEmpty;
 import javax.validation.constraints.NotNull;
 
 import org.hibernate.validator.constraints.Length;
@@ -42,11 +43,9 @@ public class CookingRecipe {
 	private String name;
 	
 	@NotNull(message = "Le temps de préparation ne peut pas être vide")
-	@NotBlank(message = "Le temps de préparation doit être complété")
 	private LocalTime preparationTime;
 	
 	@NotNull(message = "Le temps de cuisson ne peut pas être vide")
-	@NotBlank(message = "Le temps de cuisson doit être complété")
 	private LocalTime cookingTime;
 	
 	@NotNull(message = "La description ne peut pas être vide")
@@ -67,19 +66,20 @@ public class CookingRecipe {
 	private List<Review> reviews;
 	
 	@NotNull(message = "Les ingrédients ne peuvent pas être vide")
-	@NotBlank(message = "Les ingrédients doivent être complété")
+	@NotEmpty(message = "Les ingrédients doivent être complété")
 	@ToString.Exclude
-	@OneToMany(targetEntity=Ingredient.class, fetch = FetchType.LAZY)
-	@JoinTable(name = "ingredientsOfCookingRecipes")
+	@JsonIgnore
+	@ManyToMany
+//	@JoinTable(name = "ingredientsOfCookingRecipes")
 	private List<Ingredient> ingredients;
 	
 	@ToString.Exclude
-	@OneToMany(targetEntity=Device.class, fetch = FetchType.LAZY)
-	@JoinTable(name = "devicesOfCookingRecipe")
+	@JsonIgnore
+	@ManyToMany
+//	@JoinTable(name = "devicesOfCookingRecipe")
 	private List<Device> devices;
 	
 	@NotNull(message = "La catégorie ne peut pas être vide")
-	@NotBlank(message = "La catégorie doit être complété")
 	@ManyToOne
 	private Category category;
 	
@@ -104,7 +104,7 @@ public class CookingRecipe {
 			@NotNull(message = "La description ne peut pas être vide") @NotBlank(message = "La description doit être complété") @Length(max = 10000, message = "La description doit être de maximum 10 000 caractères") String description,
 			@NotNull(message = "Les ingrédients ne peuvent pas être vide") @NotBlank(message = "Les ingrédients doivent être complété") List<Ingredient> ingredients,
 			List<Device> devices,
-			@NotNull(message = "La catégorie ne peut pas être vide") @NotBlank(message = "La catégorie doit être complété") Category category,
+			@NotNull(message = "La catégorie ne peut pas être vide") Category category,
 			Type type, @NotNull(message = "Le membre doit être présent") Member member) {
 		this();
 		this.name = name;

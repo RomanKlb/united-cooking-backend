@@ -11,8 +11,10 @@ import javax.validation.Valid;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.validation.BindingResult;
 import org.springframework.validation.ObjectError;
+import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.ExceptionHandler;
@@ -29,6 +31,7 @@ import fr.open.roman.unitedcooking.models.dto.CookingRecipeReceipt;
 import fr.open.roman.unitedcooking.models.exception.AlreadyTakenException;
 import fr.open.roman.unitedcooking.models.exception.notfound.NotFoundCategoryException;
 import fr.open.roman.unitedcooking.models.exception.notfound.NotFoundCookingRecipeException;
+import fr.open.roman.unitedcooking.models.exception.notfound.NotFoundException;
 import fr.open.roman.unitedcooking.models.exception.notfound.NotFoundMemberException;
 import fr.open.roman.unitedcooking.models.exception.notfound.NotFoundTypeException;
 import fr.open.roman.unitedcooking.service.CookingRecipeService;
@@ -36,6 +39,7 @@ import fr.open.roman.unitedcooking.service.CookingRecipeService;
 @CrossOrigin(origins = "*", maxAge = 3600)
 @RestController
 @RequestMapping("/unitedcooking/cooking-recipe")
+@Validated
 public class CookingRecipeController {
 
 	Logger log = LoggerFactory.getLogger(this.getClass());
@@ -54,12 +58,13 @@ public class CookingRecipeController {
 	}
 	@ExceptionHandler(fr.open.roman.unitedcooking.models.exception.AlreadyTakenException.class)
 	@ResponseStatus(code = HttpStatus.CONFLICT)
-	public String processAlreadyTakenException(Exception exception) {
-		return exception.getMessage();
+	public ResponseEntity<Object> processAlreadyTakenException(AlreadyTakenException exception) {
+		return new ResponseEntity<Object>("Le nom de cette recette est déjà pris !", HttpStatus.CONFLICT);
+		
 	}
 	@ExceptionHandler(fr.open.roman.unitedcooking.models.exception.notfound.NotFoundException.class)
 	@ResponseStatus(code = HttpStatus.CONFLICT)
-	public String processNotFoundException(Exception exception) {
+	public String processNotFoundException(NotFoundException exception) {
 		return exception.getMessage();
 	}
 

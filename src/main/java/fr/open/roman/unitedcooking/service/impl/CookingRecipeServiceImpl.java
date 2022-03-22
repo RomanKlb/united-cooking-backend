@@ -1,5 +1,6 @@
 package fr.open.roman.unitedcooking.service.impl;
 
+import java.time.LocalTime;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
@@ -53,11 +54,17 @@ public class CookingRecipeServiceImpl implements CookingRecipeService{
 			throws NotFoundCategoryException, NotFoundTypeException, NotFoundMemberException {
 		
 		Member member = RecuperationOfMember(dto.getMemberPseudo());
+		String[] preparationTime = dto.getPreparationTime().split(":");
+		String[] cookingTime = dto.getCookingTime().split(":");
+		int hourOfPreparationTime = Integer.parseInt(preparationTime[0]);
+		int minuteOfPreparationTime = Integer.parseInt(preparationTime[1]);
+		int hourOfCookingTime = Integer.parseInt(cookingTime[0]);
+		int minuteOfCookingTime = Integer.parseInt(cookingTime[1]);
 		
 		CookingRecipe cookingRecipe = cookingRecipeRepository.save(new CookingRecipe(
 				dto.getName(), 
-				dto.getPreparationTime(), 
-				dto.getCookingTime(), 
+				LocalTime.of(hourOfPreparationTime, minuteOfPreparationTime) , 
+				LocalTime.of(hourOfCookingTime, minuteOfCookingTime), 
 				dto.getDescription(), 
 				selectionOfIngredients(dto.getIngredients()), 
 				selectionOfDevices(dto.getDevices()), 
@@ -76,7 +83,6 @@ public class CookingRecipeServiceImpl implements CookingRecipeService{
 			return memberService.recoveryMemberByPseudo(memberPseudo).get();
 		}
 		throw new NotFoundMemberException("Le membre n'a pas été trouvé !"); 
-
 	}
 	private Type RecuperationOfType(String typeName) throws NotFoundTypeException {
 		if(typeService.recoveryTypeByName(typeName).isPresent()) {

@@ -8,7 +8,6 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.OneToMany;
-import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.NotNull;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
@@ -32,7 +31,6 @@ public class Category {
 	private Long id;
 	
 	@NotNull(message = "Le nom de la catégorie ne peut pas être vide")
-	@NotBlank(message = "Le nom de la catégorie doit être remplis")
 	private String name;
 	
 	@JsonIgnore
@@ -42,7 +40,7 @@ public class Category {
 
 	
 	public Category(
-			@NotNull(message = "Le nom de la catégorie ne peut pas être vide") @NotBlank(message = "Le nom de la catégorie doit être remplis") String name) {
+			@NotNull(message = "Le nom de la catégorie ne peut pas être vide")  String name) {
 		super();
 		this.name = name;
 	}
